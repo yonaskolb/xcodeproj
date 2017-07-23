@@ -11,8 +11,7 @@ final class PBXProjSpec: XCTestCase {
     override func setUp() {
         super.setUp()
         object = PBXObject.pbxBuildFile(PBXBuildFile(reference: "ref", fileRef: "333"))
-        subject = PBXProj(path: "test",
-                          name: "name",
+        subject = PBXProj(name: "name",
                           archiveVersion: 1,
                           objectVersion: 46,
                           rootObject: "root",
@@ -63,8 +62,7 @@ final class PBXProjIntegrationSpec: XCTestCase {
     }
     
     private func fixturePath() -> Path {
-        let fixtures = Path(#file).parent().parent().parent() + Path("Fixtures")
-        let path = fixtures + Path("iOS/Project.xcodeproj/project.pbxproj")
+        let path = fixturesPath() + Path("iOS/Project.xcodeproj/project.pbxproj")
         return path
     }
     
