@@ -53,9 +53,6 @@ public struct XcodeProj {
 extension XcodeProj: Writable {
 
     public func write(path: Path, override: Bool = true) throws {
-        if override && path.exists {
-            try path.delete()
-        }
 
         try path.mkpath()
 
@@ -70,9 +67,12 @@ extension XcodeProj: Writable {
         // write shared data
         if let sharedData = sharedData {
             let schemesPath = path + "xcshareddata/xcschemes"
+            if override && schemesPath.exists {
+                try schemesPath.delete()
+            }
             try schemesPath.mkpath()
             for scheme in sharedData.schemes {
-                try scheme.write(path: schemesPath + scheme.name, override: override)
+                try scheme.write(path: schemesPath + "\(scheme.name).xcscheme", override: override)
             }
         }
     }
